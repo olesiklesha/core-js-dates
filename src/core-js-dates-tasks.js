@@ -282,8 +282,50 @@ function getQuarter(date) {
  * { start: '01-01-2024', end: '15-01-2024' }, 1, 3 => ['01-01-2024', '05-01-2024', '09-01-2024', '13-01-2024']
  * { start: '01-01-2024', end: '10-01-2024' }, 1, 1 => ['01-01-2024', '03-01-2024', '05-01-2024', '07-01-2024', '09-01-2024']
  */
-function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
-  throw new Error('Not implemented');
+function getWorkSchedule(period, countWorkDays, countOffDays) {
+  const schedule = [];
+
+  const parseDate = (str) => {
+    const arr = str.split('-');
+
+    return new Date(arr[2], arr[1] - 1, arr[0], 3, 0, 0);
+  };
+
+  const convertToString = (date) => {
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const currDate = String(date.getUTCDate()).padStart(2, '0');
+
+    return `${currDate}-${month}-${year}`;
+  };
+
+  const end = parseDate(period.end);
+  const start = parseDate(period.start);
+
+  const currYear = start.getUTCFullYear();
+  const currMonth = start.getUTCMonth();
+  let currDate = start.getUTCDate();
+
+  const endTS = Date.parse(end.toUTCString());
+
+  let dateObj = new Date(currYear, currMonth, currDate, 3, 0, 0);
+  let counter = 0;
+
+  while (Date.parse(dateObj.toUTCString()) <= endTS) {
+    if (counter < countWorkDays) {
+      schedule.push(convertToString(dateObj));
+      counter += 1;
+      currDate += 1;
+      dateObj = new Date(currYear, currMonth, currDate, 3, 0, 0);
+    } else {
+      currDate += countOffDays;
+      dateObj = new Date(currYear, currMonth, currDate, 3, 0, 0);
+
+      counter = 0;
+    }
+  }
+
+  return schedule;
 }
 
 /**
@@ -298,13 +340,12 @@ function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
  * Date(2022, 2, 1) => false
  * Date(2020, 2, 1) => true
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
-  // const year = date.getFullYear();
-  //
-  // if (year % 4 !== 0) return false;
-  // if (year % 100 !== 0) return true;
-  // return year % 400 === 0;
+function isLeapYear(date) {
+  const year = date.getFullYear();
+
+  if (year % 4 !== 0) return false;
+  if (year % 100 !== 0) return true;
+  return year % 400 === 0;
 }
 
 module.exports = {
