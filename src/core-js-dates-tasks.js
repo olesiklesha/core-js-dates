@@ -60,7 +60,7 @@ function getDayName(date) {
     5: 'Friday',
     6: 'Saturday',
   };
-  return days[dateObj.getDay()];
+  return days[dateObj.getUTCDay()];
 }
 
 /**
