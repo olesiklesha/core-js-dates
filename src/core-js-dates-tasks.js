@@ -308,7 +308,7 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
 
   const endTS = Date.parse(end.toUTCString());
 
-  let dateObj = new Date(currYear, currMonth, currDate, 3, 0, 0);
+  let dateObj = new Date(Date.UTC(currYear, currMonth, currDate));
   let counter = 0;
 
   while (Date.parse(dateObj.toUTCString()) <= endTS) {
@@ -316,10 +316,10 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
       schedule.push(convertToString(dateObj));
       counter += 1;
       currDate += 1;
-      dateObj = new Date(currYear, currMonth, currDate, 3, 0, 0);
+      dateObj = new Date(Date.UTC(currYear, currMonth, currDate));
     } else {
       currDate += countOffDays;
-      dateObj = new Date(currYear, currMonth, currDate, 3, 0, 0);
+      dateObj = new Date(Date.UTC(currYear, currMonth, currDate));
 
       counter = 0;
     }
