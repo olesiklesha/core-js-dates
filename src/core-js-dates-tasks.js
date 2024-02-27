@@ -158,7 +158,7 @@ function isDateInPeriod(date, period) {
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
 function formatDate(date) {
-  const dateObj = new Date(date);
+  const dateObj = new Date(Date.parse(date));
   const hours = dateObj.getUTCHours();
   const MDPos = hours >= 12 ? 'PM' : 'AM';
   const minutes = String(dateObj.getUTCMinutes()).padStart(2, '0');
