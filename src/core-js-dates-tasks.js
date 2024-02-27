@@ -206,9 +206,9 @@ function getCountWeekendsInMonth(month, year) {
 function getWeekNumberByDate(date) {
   const MSEC_PER_DEY = 86400000;
   const year = date.getFullYear();
-  const start = Date.parse(new Date(year, 0, 1).toString());
+  const start = Date.parse(new Date(Date.UTC(year, 0, 1)).toString());
   const current = Date.parse(date.toString());
-  const additional = new Date(year, 0, 1).getDay();
+  const additional = new Date(Date.UTC(year, 0, 1)).getDay();
 
   return Math.ceil(((current - start) / MSEC_PER_DEY + 1 + additional) / 7);
 }
