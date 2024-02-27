@@ -288,7 +288,7 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
   const parseDate = (str) => {
     const arr = str.split('-');
 
-    return new Date(arr[2], arr[1] - 1, arr[0], 3, 0, 0);
+    return new Date(Date.UTC(arr[2], arr[1] - 1, arr[0]));
   };
 
   const convertToString = (date) => {
